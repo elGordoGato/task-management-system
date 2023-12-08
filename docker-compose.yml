@@ -1,0 +1,14 @@
+version: '3.1'
+services:
+  task-db:
+    image: postgres:14-alpine
+    container_name: task-db
+    ports:
+      - "6543:5432"
+    volumes:
+      - /var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=taskdb
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+
