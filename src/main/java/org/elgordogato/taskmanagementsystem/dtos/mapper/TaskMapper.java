@@ -14,25 +14,16 @@ public class TaskMapper {
                 .priority(entity.getPriority())
                 .creatorId(entity.getCreator().getId())
                 .executorId(entity.getExecutor().getId())
-                .comments(CommentMapper.listDtoFromEntity(entity.getComments()))
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();
     }
 
     public static Page<TaskDto> pageDtoFromEntity(Page<TaskEntity> foundTasks) {
-        return foundTasks.map(entity ->
-                TaskDto.builder()
-                        .id(entity.getId())
-                        .title(entity.getTitle())
-                        .description(entity.getDescription())
-                        .status(entity.getStatus())
-                        .priority(entity.getPriority())
-                        .creatorId(entity.getCreator().getId())
-                        .executorId(entity.getExecutor().getId())
-                        .comments(CommentMapper.listDtoFromEntity(entity.getComments()))
-                        .createdAt(entity.getCreatedAt())
-                        .updatedAt(entity.getUpdatedAt())
-                        .build());
+        return foundTasks.map(entity -> {
+            TaskDto dto = dtoFromEntity(entity);
+            dto.setComments(CommentMapper.listDtoFromEntity(entity.getComments()));
+            return dto;
+        });
     }
 }

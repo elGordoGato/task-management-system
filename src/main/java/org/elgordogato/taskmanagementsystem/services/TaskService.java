@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TaskService {
     TaskEntity create(TaskDto inputTask, UserEntity creator, UserEntity executor);
 
-    TaskEntity update(TaskDto inputTask, UserEntity creator, UserEntity executor);
+    TaskEntity update(TaskDto inputTask, Long creator, UserEntity executor);
 
     @Transactional
-    void delete(Long taskID, UserEntity requester);
+    void delete(Long taskID, Long requester);
 
     TaskEntity getByIdWithComments(Long taskID);
 

@@ -15,7 +15,8 @@ import org.elgordogato.taskmanagementsystem.enums.TaskPriorityEnum;
 import org.elgordogato.taskmanagementsystem.enums.TaskStatusEnum;
 import org.elgordogato.taskmanagementsystem.services.TaskService;
 import org.elgordogato.taskmanagementsystem.services.impl.UserServiceImpl;
-import org.elgordogato.taskmanagementsystem.utils.Marker;
+import org.elgordogato.taskmanagementsystem.utils.Marker.OnCreate;
+import org.elgordogato.taskmanagementsystem.utils.Marker.OnUpdate;
 import org.elgordogato.taskmanagementsystem.utils.TaskParameters;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,14 +39,18 @@ public class TaskController {
     private final TaskService taskService;
     private final UserServiceImpl userService;
 
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Validated(Marker.OnCreate.class)
+    @Validated(OnCreate.class)
     public TaskDto create(@RequestBody @Valid TaskDto inputTaskDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         UserEntity currentUser = (UserEntity) authentication.getPrincipal();
         UserEntity executor = userService.getById(inputTaskDto.getExecutorId());
+
+        log.info("Received request from user: {} to create task: {}", currentUser.getId(), inputTaskDto);
+
 
         TaskEntity createdTask = taskService.create(inputTaskDto, currentUser, executor);
 
@@ -53,16 +58,18 @@ public class TaskController {
     }
 
     @PatchMapping
-    @Validated(Marker.OnUpdate.class)
+    @Validated(OnUpdate.class)
     public TaskDto update(@RequestBody @Valid TaskDto inputTaskDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UserEntity currentUser = (UserEntity) authentication.getPrincipal();
+        Long requesterId = ((UserEntity) authentication.getPrincipal()).getId();
         UserEntity executor = Optional.of(inputTaskDto.getExecutorId())
                 .map(userService::getById)
                 .orElse(null);
 
-        TaskEntity updatedTask = taskService.update(inputTaskDto, currentUser, executor);
+        log.info("Received request from user: {} to update task with new data: {}", requesterId, inputTaskDto);
+
+        TaskEntity updatedTask = taskService.update(inputTaskDto, requesterId, executor);
 
         return TaskMapper.dtoFromEntity(updatedTask);
     }
@@ -72,9 +79,11 @@ public class TaskController {
     public void delete(@PathVariable Long taskId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UserEntity currentUser = (UserEntity) authentication.getPrincipal();
+        Long requesterId = ((UserEntity) authentication.getPrincipal()).getId();
 
-        taskService.delete(taskId, currentUser);
+        log.info("Received request to delete task with id: {} from user: {} ", taskId, requesterId);
+
+        taskService.delete(taskId, requesterId);
     }
 
     @GetMapping
@@ -126,11 +135,10 @@ public class TaskController {
                 .hasComments(hasComments)
                 .build();
 
-        log.info("Received request to get events with parameters: {}", parameters);
+        log.info("Received request to get tasks with parameters: {}\nand page: {} ", parameters, page);
 
         Page<TaskEntity> foundTasks = taskService.getByParameters(parameters, page);
 
         return TaskMapper.pageDtoFromEntity(foundTasks);
     }
-
 }

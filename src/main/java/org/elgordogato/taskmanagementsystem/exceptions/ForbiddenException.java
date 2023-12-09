@@ -1,14 +1,7 @@
 package org.elgordogato.taskmanagementsystem.exceptions;
 
 public class ForbiddenException extends RuntimeException {
-    private final Long idNotPermitted;
-
-    public ForbiddenException(Long idNotPermitted) {
-        this.idNotPermitted = idNotPermitted;
-    }
-
-    @Override
-    public String getMessage() {
-        return String.valueOf(idNotPermitted);
+    public ForbiddenException(Long userId, String message, Long targetId) {
+        super(String.format("User with %d has no rights to %s with id: %d", userId, message, targetId));
     }
 }

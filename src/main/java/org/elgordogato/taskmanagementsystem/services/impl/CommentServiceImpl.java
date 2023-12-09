@@ -34,9 +34,9 @@ public class CommentServiceImpl implements CommentService {
 
         CommentEntity commentToUpdate = commentRepository.findById(inputComment.getId())
                 .orElseThrow(() ->
-                        new NotFoundException(inputComment.getId()));
+                        new NotFoundException(CommentEntity.class, inputComment.getId()));
         if (!commentToUpdate.getAuthor().getId().equals(currentUser.getId())) {
-            throw new ForbiddenException(currentUser.getId());
+            throw new ForbiddenException(currentUser.getId(), "update comment", inputComment.getId());
         }
         commentToUpdate.setText(inputComment.getText());
 
@@ -47,10 +47,10 @@ public class CommentServiceImpl implements CommentService {
     public void delete(Long commentId, UserEntity currentUser) {
         CommentEntity commentToDelete = commentRepository.findById(commentId)
                 .orElseThrow(() ->
-                        new NotFoundException(commentId));
+                        new NotFoundException(CommentEntity.class, commentId));
 
         if (!commentToDelete.getAuthor().getId().equals(currentUser.getId())) {
-            throw new ForbiddenException(currentUser.getId());
+            throw new ForbiddenException(currentUser.getId(), "delete comment", commentId);
         }
 
         commentRepository.delete(commentToDelete);

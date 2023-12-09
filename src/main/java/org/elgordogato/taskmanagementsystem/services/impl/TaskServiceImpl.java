@@ -40,27 +40,28 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public TaskEntity update(TaskDto inputTask, UserEntity requester, UserEntity executor) {
+    public TaskEntity update(TaskDto inputTask, Long requesterId, UserEntity executor) {
         TaskEntity taskToUpdate = taskRepository.findById(inputTask.getId()).orElseThrow(() ->
-                new NotFoundException(inputTask.getId()));
-        if (requester.getId().equals(taskToUpdate.getCreator().getId())) {
+                new NotFoundException(TaskEntity.class, inputTask.getId()));
+
+        if (requesterId.equals(taskToUpdate.getCreator().getId())) {
             updateByCreator(taskToUpdate, inputTask, executor);
 
-        } else if (requester.getId().equals(taskToUpdate.getExecutor().getId())) {
+        } else if (requesterId.equals(taskToUpdate.getExecutor().getId())) {
             updateByExecutor(taskToUpdate, inputTask);
 
-        } else throw new ForbiddenException(requester.getId());
+        } else throw new ForbiddenException(requesterId, "update task", inputTask.getId());
 
         return taskRepository.save(taskToUpdate);
     }
 
     @Override
     @Transactional
-    public void delete(Long taskID, UserEntity requester) {
+    public void delete(Long taskID, Long requesterId) {
         TaskEntity taskToDelete = taskRepository.findById(taskID).orElseThrow(() ->
-                new NotFoundException(taskID));
-        if (!taskToDelete.getCreator().getId().equals(requester.getId())) {
-            throw new ForbiddenException(requester.getId());
+                new NotFoundException(TaskEntity.class, taskID));
+        if (!taskToDelete.getCreator().getId().equals(requesterId)) {
+            throw new ForbiddenException(requesterId, "delete task", taskID);
         }
         taskRepository.delete(taskToDelete);
     }
