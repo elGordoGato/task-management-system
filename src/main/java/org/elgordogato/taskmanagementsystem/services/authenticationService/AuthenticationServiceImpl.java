@@ -1,11 +1,10 @@
-package org.elgordogato.taskmanagementsystem.services.impl;
+package org.elgordogato.taskmanagementsystem.services.authenticationService;
 
 
 import lombok.RequiredArgsConstructor;
 import org.elgordogato.taskmanagementsystem.dtos.UserDto;
 import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.repositories.UserRepository;
-import org.elgordogato.taskmanagementsystem.services.AuthenticationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public UserEntity signup(UserDto input) {
         var user = new UserEntity();
-        user.setName(input.getFullName());
+        user.setFullName(input.getFullName());
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
 

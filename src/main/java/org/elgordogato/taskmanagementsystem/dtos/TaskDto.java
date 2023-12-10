@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
-import org.elgordogato.taskmanagementsystem.enums.TaskPriorityEnum;
-import org.elgordogato.taskmanagementsystem.enums.TaskStatusEnum;
+import org.elgordogato.taskmanagementsystem.utils.enums.TaskPriorityEnum;
+import org.elgordogato.taskmanagementsystem.utils.enums.TaskStatusEnum;
 import org.elgordogato.taskmanagementsystem.utils.Marker.OnCreate;
 import org.elgordogato.taskmanagementsystem.utils.Marker.OnUpdate;
 

@@ -1,6 +1,5 @@
-package org.elgordogato.taskmanagementsystem.services;
+package org.elgordogato.taskmanagementsystem.services.authenticationService;
 
-import org.elgordogato.taskmanagementsystem.dtos.LoginUserDto;
 import org.elgordogato.taskmanagementsystem.dtos.UserDto;
 import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 

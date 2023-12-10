@@ -1,4 +1,4 @@
-package org.elgordogato.taskmanagementsystem.services;
+package org.elgordogato.taskmanagementsystem.services.authenticationService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

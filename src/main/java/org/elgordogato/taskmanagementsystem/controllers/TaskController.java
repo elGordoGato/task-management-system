@@ -10,11 +10,11 @@ import org.elgordogato.taskmanagementsystem.dtos.TaskDto;
 import org.elgordogato.taskmanagementsystem.dtos.mapper.TaskMapper;
 import org.elgordogato.taskmanagementsystem.entities.TaskEntity;
 import org.elgordogato.taskmanagementsystem.entities.UserEntity;
-import org.elgordogato.taskmanagementsystem.enums.SortParamEnum;
-import org.elgordogato.taskmanagementsystem.enums.TaskPriorityEnum;
-import org.elgordogato.taskmanagementsystem.enums.TaskStatusEnum;
-import org.elgordogato.taskmanagementsystem.services.TaskService;
-import org.elgordogato.taskmanagementsystem.services.impl.UserServiceImpl;
+import org.elgordogato.taskmanagementsystem.utils.enums.SortParamEnum;
+import org.elgordogato.taskmanagementsystem.utils.enums.TaskPriorityEnum;
+import org.elgordogato.taskmanagementsystem.utils.enums.TaskStatusEnum;
+import org.elgordogato.taskmanagementsystem.services.taskService.TaskService;
+import org.elgordogato.taskmanagementsystem.services.userService.UserServiceImpl;
 import org.elgordogato.taskmanagementsystem.utils.Marker.OnCreate;
 import org.elgordogato.taskmanagementsystem.utils.Marker.OnUpdate;
 import org.elgordogato.taskmanagementsystem.utils.TaskParameters;
@@ -45,11 +45,11 @@ public class TaskController {
     @Validated(OnCreate.class)
     public TaskDto create(@RequestBody @Valid TaskDto inputTaskDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         UserEntity currentUser = (UserEntity) authentication.getPrincipal();
-        UserEntity executor = userService.getById(inputTaskDto.getExecutorId());
 
         log.info("Received request from user: {} to create task: {}", currentUser.getId(), inputTaskDto);
+
+        UserEntity executor = userService.getById(inputTaskDto.getExecutorId());
 
 
         TaskEntity createdTask = taskService.create(inputTaskDto, currentUser, executor);
@@ -61,13 +61,14 @@ public class TaskController {
     @Validated(OnUpdate.class)
     public TaskDto update(@RequestBody @Valid TaskDto inputTaskDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         Long requesterId = ((UserEntity) authentication.getPrincipal()).getId();
+
+        log.info("Received request from user: {} to update task with new data: {}", requesterId, inputTaskDto);
+
         UserEntity executor = Optional.of(inputTaskDto.getExecutorId())
                 .map(userService::getById)
                 .orElse(null);
 
-        log.info("Received request from user: {} to update task with new data: {}", requesterId, inputTaskDto);
 
         TaskEntity updatedTask = taskService.update(inputTaskDto, requesterId, executor);
 

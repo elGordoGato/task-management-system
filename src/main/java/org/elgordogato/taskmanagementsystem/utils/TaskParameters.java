@@ -3,8 +3,8 @@ package org.elgordogato.taskmanagementsystem.utils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import org.elgordogato.taskmanagementsystem.enums.TaskPriorityEnum;
-import org.elgordogato.taskmanagementsystem.enums.TaskStatusEnum;
+import org.elgordogato.taskmanagementsystem.utils.enums.TaskPriorityEnum;
+import org.elgordogato.taskmanagementsystem.utils.enums.TaskStatusEnum;
 
 @Builder
 @Getter

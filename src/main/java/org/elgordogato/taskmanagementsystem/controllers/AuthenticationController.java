@@ -4,13 +4,12 @@ package org.elgordogato.taskmanagementsystem.controllers;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.elgordogato.taskmanagementsystem.dtos.LoginResponse;
-import org.elgordogato.taskmanagementsystem.dtos.LoginUserDto;
 import org.elgordogato.taskmanagementsystem.dtos.UserDto;
+import org.elgordogato.taskmanagementsystem.dtos.mapper.UserMapper;
 import org.elgordogato.taskmanagementsystem.entities.UserEntity;
-import org.elgordogato.taskmanagementsystem.services.JwtService;
-import org.elgordogato.taskmanagementsystem.services.impl.AuthenticationServiceImpl;
+import org.elgordogato.taskmanagementsystem.services.authenticationService.JwtService;
+import org.elgordogato.taskmanagementsystem.services.authenticationService.AuthenticationServiceImpl;
 import org.elgordogato.taskmanagementsystem.utils.Marker;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,24 +32,22 @@ public class AuthenticationController {
     @PostMapping("/signup")
     @Validated(Marker.OnCreate.class)
     public UserDto register(@RequestBody @Valid UserDto userDto) {
-        log.info("Received request to register new user: {}", userDto);
+        log.info("Received request to register new user\nemail: {}\nname: {}",
+                userDto.getEmail(), userDto.getFullName());
         UserEntity registeredUser = authenticationService.signup(userDto);
 
-        return UserDto.builder()
-                .id(registeredUser.getId())
-                .email(registeredUser.getEmail())
-                .fullName(registeredUser.getName())
-                .build();
+        return UserMapper.dtoFromEntity(registeredUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody @Valid UserDto loginUserDto) {
+    public LoginResponse authenticate(@RequestBody @Valid UserDto loginUserDto) {
+        log.info("Received request to login with email: {}", loginUserDto.getEmail());
         UserEntity authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);
         System.out.println(new LoginResponse(jwtToken, jwtService.getExpirationTime()));
 
 
-        return ResponseEntity.ok(new LoginResponse(jwtToken, jwtService.getExpirationTime()));
+        return new LoginResponse(jwtToken, jwtService.getExpirationTime());
     }
 }

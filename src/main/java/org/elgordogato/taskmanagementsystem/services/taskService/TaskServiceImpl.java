@@ -1,4 +1,4 @@
-package org.elgordogato.taskmanagementsystem.services.impl;
+package org.elgordogato.taskmanagementsystem.services.taskService;
 
 import lombok.RequiredArgsConstructor;
 import org.elgordogato.taskmanagementsystem.dtos.TaskDto;
@@ -7,7 +7,6 @@ import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.exceptions.ForbiddenException;
 import org.elgordogato.taskmanagementsystem.exceptions.NotFoundException;
 import org.elgordogato.taskmanagementsystem.repositories.TaskRepository;
-import org.elgordogato.taskmanagementsystem.services.TaskService;
 import org.elgordogato.taskmanagementsystem.utils.TaskParameters;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +25,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public TaskEntity create(TaskDto inputTask, UserEntity creator, UserEntity executor) {
         TaskEntity createdTask = new TaskEntity();
+
         createdTask.setTitle(inputTask.getTitle());
         createdTask.setDescription(inputTask.getDescription());
         Optional.ofNullable(inputTask.getStatus())
@@ -41,7 +41,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public TaskEntity update(TaskDto inputTask, Long requesterId, UserEntity executor) {
-        TaskEntity taskToUpdate = taskRepository.findById(inputTask.getId()).orElseThrow(() ->
+        TaskEntity taskToUpdate = taskRepository.findById(inputTask.getId())
+                .orElseThrow(() ->
                 new NotFoundException(TaskEntity.class, inputTask.getId()));
 
         if (requesterId.equals(taskToUpdate.getCreator().getId())) {
@@ -58,8 +59,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public void delete(Long taskID, Long requesterId) {
-        TaskEntity taskToDelete = taskRepository.findById(taskID).orElseThrow(() ->
+        TaskEntity taskToDelete = taskRepository.findById(taskID)
+                .orElseThrow(() ->
                 new NotFoundException(TaskEntity.class, taskID));
+
         if (!taskToDelete.getCreator().getId().equals(requesterId)) {
             throw new ForbiddenException(requesterId, "delete task", taskID);
         }
@@ -67,8 +70,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskEntity getByIdWithComments(Long taskID) {
-        return null;
+    public TaskEntity getById(Long taskID) {
+        return taskRepository.findById(taskID)
+                .orElseThrow(() ->
+                        new NotFoundException(TaskEntity.class, taskID));
     }
 
     @Override

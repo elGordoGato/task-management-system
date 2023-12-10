@@ -27,7 +27,7 @@ public class UserEntity implements UserDetails {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String fullName;
 
     @Column(unique = true, length = 100, nullable = false)
     private String email;

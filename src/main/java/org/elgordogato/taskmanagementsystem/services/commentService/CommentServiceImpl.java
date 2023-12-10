@@ -1,4 +1,4 @@
-package org.elgordogato.taskmanagementsystem.services.impl;
+package org.elgordogato.taskmanagementsystem.services.commentService;
 
 import lombok.RequiredArgsConstructor;
 import org.elgordogato.taskmanagementsystem.dtos.CommentDto;
@@ -8,7 +8,6 @@ import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.exceptions.ForbiddenException;
 import org.elgordogato.taskmanagementsystem.exceptions.NotFoundException;
 import org.elgordogato.taskmanagementsystem.repositories.CommentRepository;
-import org.elgordogato.taskmanagementsystem.services.CommentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

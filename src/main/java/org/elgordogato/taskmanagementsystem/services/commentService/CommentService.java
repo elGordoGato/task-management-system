@@ -1,4 +1,4 @@
-package org.elgordogato.taskmanagementsystem.services;
+package org.elgordogato.taskmanagementsystem.services.commentService;
 
 import org.elgordogato.taskmanagementsystem.dtos.CommentDto;
 import org.elgordogato.taskmanagementsystem.entities.CommentEntity;

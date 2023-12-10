@@ -1,4 +1,4 @@
-package org.elgordogato.taskmanagementsystem.services;
+package org.elgordogato.taskmanagementsystem.services.taskService;
 
 import org.elgordogato.taskmanagementsystem.dtos.TaskDto;
 import org.elgordogato.taskmanagementsystem.entities.TaskEntity;
@@ -16,7 +16,7 @@ public interface TaskService {
     @Transactional
     void delete(Long taskID, Long requester);
 
-    TaskEntity getByIdWithComments(Long taskID);
+    TaskEntity getById(Long taskID);
 
     Page<TaskEntity> getByParameters(TaskParameters parameters, Pageable page);
 }

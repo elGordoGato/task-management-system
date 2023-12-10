@@ -31,7 +31,6 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
         Root<TaskEntity> task = query.from(TaskEntity.class);
 
         Predicate commonPredicate = getCommonPredicate(cb, task, parameters);
-        System.out.println(commonPredicate);
 
         query.select(task)
                 .where(commonPredicate)
@@ -54,7 +53,10 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
         return new PageImpl<>(result, page, count);
     }
 
-    private Predicate getCommonPredicate(CriteriaBuilder cb, Root<TaskEntity> task, TaskParameters parameters) {
+    private Predicate getCommonPredicate(CriteriaBuilder cb,
+                                         Root<TaskEntity> task,
+                                         TaskParameters parameters) {
+
         List<Predicate> andPredicates = new ArrayList<>();
 
         Optional.ofNullable(parameters.getTitle())
@@ -94,8 +96,12 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
 
     }
 
-    private List<Predicate> getUserPredicates(CriteriaBuilder cb, Root<TaskEntity> task, TaskParameters parameters) {
+    private List<Predicate> getUserPredicates(CriteriaBuilder cb,
+                                              Root<TaskEntity> task,
+                                              TaskParameters parameters) {
+
         List<Predicate> orPredicates = new ArrayList<>();
+
         Optional.ofNullable(parameters.getCreatorId())
                 .ifPresent(creatorId ->
                         orPredicates.add(

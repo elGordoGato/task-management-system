@@ -1,4 +1,4 @@
-package org.elgordogato.taskmanagementsystem.enums;
+package org.elgordogato.taskmanagementsystem.utils.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
