@@ -16,7 +16,7 @@ public interface TaskService {
     @Transactional
     void delete(Long taskID, Long requester);
 
-    TaskEntity getById(Long taskID);
+    TaskEntity getWithCommentsById(Long taskID);
 
     Page<TaskEntity> getByParameters(TaskParameters parameters, Pageable page);
 }

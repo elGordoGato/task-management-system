@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 
 @Slf4j
@@ -91,9 +92,9 @@ public class GlobalExceptionHandler {
         return errorDetail;
     }
 
-    @ExceptionHandler(value = NotFoundException.class)
+    @ExceptionHandler(value = {NotFoundException.class, NoResourceFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ProblemDetail handleNotFoundException(final NotFoundException exception) {
+    public ProblemDetail handleNotFoundException(final Exception exception) {
         log.error("An exception occurred!", exception);
         errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
         errorDetail.setProperty("description", "Requested resource was not found");

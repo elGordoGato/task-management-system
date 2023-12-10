@@ -70,8 +70,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskEntity getById(Long taskID) {
-        return taskRepository.findById(taskID)
+    public TaskEntity getWithCommentsById(Long taskID) {
+        return taskRepository.findWithCommentsById(taskID)
                 .orElseThrow(() ->
                         new NotFoundException(TaskEntity.class, taskID));
     }

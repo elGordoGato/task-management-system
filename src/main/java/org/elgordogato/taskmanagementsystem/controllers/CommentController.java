@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Validated
 @RequestMapping(path = "/tasks/{taskId}/comment")
+@RestController
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
@@ -36,7 +37,7 @@ public class CommentController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserEntity currentUser = (UserEntity) authentication.getPrincipal();
 
-        TaskEntity task = taskService.getById(taskId);
+        TaskEntity task = taskService.getWithCommentsById(taskId);
 
         CommentEntity createdComment = commentService.create(inputComment, task, currentUser);
 

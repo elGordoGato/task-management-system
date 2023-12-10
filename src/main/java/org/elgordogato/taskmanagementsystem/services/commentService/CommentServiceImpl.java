@@ -8,6 +8,7 @@ import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.exceptions.ForbiddenException;
 import org.elgordogato.taskmanagementsystem.exceptions.NotFoundException;
 import org.elgordogato.taskmanagementsystem.repositories.CommentRepository;
+import org.elgordogato.taskmanagementsystem.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,7 @@ public class CommentServiceImpl implements CommentService {
         createdComment.setText(inputComment.getText());
         createdComment.setTask(task);
         createdComment.setAuthor(currentUser);
+        task.getComments().add(createdComment);
 
         return commentRepository.save(createdComment);
     }
