@@ -2,12 +2,14 @@ package org.elgordogato.taskmanagementsystem.controllers;
 
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.elgordogato.taskmanagementsystem.dtos.LoginResponse;
 import org.elgordogato.taskmanagementsystem.dtos.LoginUserDto;
-import org.elgordogato.taskmanagementsystem.dtos.RegisterUserDto;
+import org.elgordogato.taskmanagementsystem.dtos.UserDto;
 import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.services.JwtService;
 import org.elgordogato.taskmanagementsystem.services.impl.AuthenticationServiceImpl;
+import org.elgordogato.taskmanagementsystem.utils.Marker;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @Validated
 @RequestMapping("/auth")
 @RestController
@@ -28,17 +31,20 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public RegisterUserDto register(@RequestBody @Valid RegisterUserDto registerUserDto) {
-        UserEntity registeredUser = authenticationService.signup(registerUserDto);
+    @Validated(Marker.OnCreate.class)
+    public UserDto register(@RequestBody @Valid UserDto userDto) {
+        log.info("Received request to register new user: {}", userDto);
+        UserEntity registeredUser = authenticationService.signup(userDto);
 
-        return RegisterUserDto.builder()
+        return UserDto.builder()
+                .id(registeredUser.getId())
                 .email(registeredUser.getEmail())
                 .fullName(registeredUser.getName())
                 .build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody @Valid LoginUserDto loginUserDto) {
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody @Valid UserDto loginUserDto) {
         UserEntity authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);

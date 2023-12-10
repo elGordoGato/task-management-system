@@ -2,8 +2,7 @@ package org.elgordogato.taskmanagementsystem.services.impl;
 
 
 import lombok.RequiredArgsConstructor;
-import org.elgordogato.taskmanagementsystem.dtos.LoginUserDto;
-import org.elgordogato.taskmanagementsystem.dtos.RegisterUserDto;
+import org.elgordogato.taskmanagementsystem.dtos.UserDto;
 import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.repositories.UserRepository;
 import org.elgordogato.taskmanagementsystem.services.AuthenticationService;
@@ -25,7 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public UserEntity signup(RegisterUserDto input) {
+    public UserEntity signup(UserDto input) {
         var user = new UserEntity();
         user.setName(input.getFullName());
         user.setEmail(input.getEmail());
@@ -35,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public UserEntity authenticate(LoginUserDto input) {
+    public UserEntity authenticate(UserDto input) {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         input.getEmail(),
