@@ -35,7 +35,7 @@ API для приложения **Task Management System** (англ. «Сист
 ---
 
 ### Спецификация API
-1. [Документация OpenAPI (swagger)](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/elGordoGato/task-management-system/blob/jwt-with-email/swagger/task-management-system-openapi.yml)
+1. [Документация OpenAPI (swagger)](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/elGordoGato/task-management-system/jwt-with-email/swagger/task-management-system-openapi.yml)
 
 
 ---
