@@ -8,7 +8,6 @@ import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.exceptions.ForbiddenException;
 import org.elgordogato.taskmanagementsystem.exceptions.NotFoundException;
 import org.elgordogato.taskmanagementsystem.repositories.CommentRepository;
-import org.elgordogato.taskmanagementsystem.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

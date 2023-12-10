@@ -1,6 +1,7 @@
 package org.elgordogato.taskmanagementsystem.exceptions;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +63,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {AccountStatusException.class,
             AccessDeniedException.class,
             SignatureException.class,
+            MalformedJwtException.class,
             ExpiredJwtException.class,
             ForbiddenException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
@@ -79,6 +81,10 @@ public class GlobalExceptionHandler {
 
         if (exception instanceof SignatureException) {
             errorDetail.setProperty("description", "The JWT signature is invalid");
+        }
+
+        if (exception instanceof MalformedJwtException) {
+            errorDetail.setProperty("description", "Unrecognized token");
         }
 
         if (exception instanceof ExpiredJwtException) {

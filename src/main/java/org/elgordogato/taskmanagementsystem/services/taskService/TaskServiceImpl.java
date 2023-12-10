@@ -43,7 +43,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskEntity update(TaskDto inputTask, Long requesterId, UserEntity executor) {
         TaskEntity taskToUpdate = taskRepository.findById(inputTask.getId())
                 .orElseThrow(() ->
-                new NotFoundException(TaskEntity.class, inputTask.getId()));
+                        new NotFoundException(TaskEntity.class, inputTask.getId()));
 
         if (requesterId.equals(taskToUpdate.getCreator().getId())) {
             updateByCreator(taskToUpdate, inputTask, executor);
@@ -61,7 +61,7 @@ public class TaskServiceImpl implements TaskService {
     public void delete(Long taskID, Long requesterId) {
         TaskEntity taskToDelete = taskRepository.findById(taskID)
                 .orElseThrow(() ->
-                new NotFoundException(TaskEntity.class, taskID));
+                        new NotFoundException(TaskEntity.class, taskID));
 
         if (!taskToDelete.getCreator().getId().equals(requesterId)) {
             throw new ForbiddenException(requesterId, "delete task", taskID);
