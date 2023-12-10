@@ -72,7 +72,7 @@ Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2JAZ21haWwuY29tIiwiaWF0IjoxNzAyMTE4MjQx
 
 ---
 
-### Запуск дев.среды
+### Запуск дев среды
 
 Находясь в корневой папке проекта вызвать
    > mvn clean package -DskipTests=true
