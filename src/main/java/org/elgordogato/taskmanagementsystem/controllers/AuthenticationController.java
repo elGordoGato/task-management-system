@@ -10,11 +10,9 @@ import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.services.authenticationService.AuthenticationServiceImpl;
 import org.elgordogato.taskmanagementsystem.services.authenticationService.JwtService;
 import org.elgordogato.taskmanagementsystem.utils.Marker;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Validated
@@ -30,6 +28,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
     @Validated(Marker.OnCreate.class)
     public UserDto register(@RequestBody @Valid UserDto userDto) {
         log.info("Received request to register new user\nemail: {}\nname: {}",

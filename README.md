@@ -35,23 +35,31 @@ API для приложения **Task Management System** (англ. «Сист
 ---
 
 ### Спецификация API
-1. [Документация OpenAPI (swagger)](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/elGordoGato/task-management-system/jwt-with-email/swagger/task-management-system-openapi.yml)
+[Документация OpenAPI (swagger)](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/elGordoGato/task-management-system/jwt-with-email/swagger/task-management-system-openapi.yml)
 
+Файл со спецификацией можно найти по пути: `swagger/task-management-system-openapi.yml`
 
 ---
 
 ### ➡️ Аутентификация и авторизация
 Авторизация происходит через валидирование JWT токена, который передается в заголовке `Authorization`
-и имеет формат
-<details><summary> JWT token </summary>
-Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2JAZ21haWwuY29tIiwiaWF0IjoxNzAyMTE4MjQxLCJleHAiOjE3MDIxNDcwNDF9.TapPa7HHd56WFi63phHUd2VbG43752Vc99Kr9Q3O4qk
+и имеет формат:
+<details><summary><strong>JWT token</strong></summary>
+
+      Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2JAZ21haWwuY29tIiwiaWF0IjoxNzAyMTE4MjQxLCJleHAiOjE3MDIxNDcwNDF9.TapPa7HHd56WFi63phHUd2VbG43752Vc99Kr9Q3O4qk
+
 </details>
 
-Получение токена происходит в теле ответа на логин по email и паролю в поле `token`, 
-также приходит в поле `expiresIn` время в миллисекундах через которое токен станет недействительным.
+Получение токена происходит из поля `token` в теле ответа на запрос с логином по email и паролю, 
+также в поле `expiresIn` приходит время в миллисекундах через которое токен станет недействительным.
 
 --- 
 
+### Тестирование
+Для тестов использована библиотека JUnit и Mockito.
+Также написана коллекция тестов для **Postman** по пути: `postman/TaskManagementSystem.postman_collection.json` 
+
+---
 
 ### Запуск приложения локально
 
@@ -67,17 +75,20 @@ Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJib2JAZ21haWwuY29tIiwiaWF0IjoxNzAyMTE4MjQx
 
     </pre>
     </details>
-3. Находясь в корневой папке проекта вызвать  
-   >   mvn spring-boot:run -Dspring-boot.run.profiles=test
-
+   
+3. Находясь в корневой папке проекта вызвать      
+   
+-      mvn spring-boot:run -Dspring-boot.run.profiles=test
+ 
 ---
 
 ### Запуск дев среды
 
-Находясь в корневой папке проекта вызвать
-   > mvn clean package -DskipTests=true
+Находясь в корневой папке проекта вызвать 
 
-   > docker compose up
+-      mvn clean package -DskipTests=true
+ 
+-      docker compose up
 
 ---
 
