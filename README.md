@@ -1,4 +1,4 @@
-![main front - reference](img/front%20page.png)
+![main front - reference](img/Kanban-Post.jpg)
 
 # **Task Management System**
 
@@ -93,4 +93,4 @@ API для приложения **Task Management System** (англ. «Сист
 ---
 
 ### Схема базы данных:
-<a href="https://dbdiagram.io/d/Explore-With-Me-654275b07d8bbd64654a0018"><img src="img/er_diagram.png"></a>
+<a href="https://dbdiagram.io/d/Task-Management-System-6576a23756d8064ca0c393ed"><img src="img/db.png"></a>
