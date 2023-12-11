@@ -1,10 +1,7 @@
 package org.elgordogato.taskmanagementsystem.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.elgordogato.taskmanagementsystem.utils.enums.TaskPriorityEnum;
 import org.elgordogato.taskmanagementsystem.utils.enums.TaskStatusEnum;
 import org.hibernate.annotations.CreationTimestamp;

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.elgordogato.taskmanagementsystem.utils.Marker.OnCreate;
 import org.elgordogato.taskmanagementsystem.utils.Marker.OnUpdate;
 import org.elgordogato.taskmanagementsystem.utils.enums.TaskPriorityEnum;
@@ -19,6 +21,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskDto {
     @NotNull(groups = OnUpdate.class)
     private Long id;
