@@ -11,7 +11,7 @@ import org.elgordogato.taskmanagementsystem.dtos.mapper.TaskMapper;
 import org.elgordogato.taskmanagementsystem.entities.TaskEntity;
 import org.elgordogato.taskmanagementsystem.entities.UserEntity;
 import org.elgordogato.taskmanagementsystem.services.taskService.TaskService;
-import org.elgordogato.taskmanagementsystem.services.userService.UserServiceImpl;
+import org.elgordogato.taskmanagementsystem.services.userService.UserService;
 import org.elgordogato.taskmanagementsystem.utils.Marker.OnCreate;
 import org.elgordogato.taskmanagementsystem.utils.Marker.OnUpdate;
 import org.elgordogato.taskmanagementsystem.utils.TaskParameters;
@@ -37,7 +37,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
 
     @PostMapping
