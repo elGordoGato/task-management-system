@@ -50,7 +50,7 @@ public class TaskEntity {
     @ToString.Exclude
     private UserEntity executor;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     @ToString.Exclude
     private List<CommentEntity> comments = new ArrayList<>();
 

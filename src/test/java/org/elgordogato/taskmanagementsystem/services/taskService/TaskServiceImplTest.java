@@ -227,7 +227,7 @@ class TaskServiceImplTest {
         when(taskRepository.findWithCommentsById(1L)).thenReturn(java.util.Optional.of(task));
 
         // when
-        TaskEntity result = taskService.getWithCommentsById(1L);
+        TaskEntity result = taskService.getById(1L);
 
         // then
         assertEquals(task, result);
@@ -239,7 +239,7 @@ class TaskServiceImplTest {
         when(taskRepository.findWithCommentsById(1L)).thenReturn(java.util.Optional.empty());
 
         // when
-        NotFoundException exception = assertThrows(NotFoundException.class, () -> taskService.getWithCommentsById(1L));
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> taskService.getById(1L));
 
         // then
         assertEquals("TaskEntity with id: 1 was not found", exception.getMessage());

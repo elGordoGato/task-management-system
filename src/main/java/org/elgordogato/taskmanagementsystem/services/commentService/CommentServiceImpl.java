@@ -24,7 +24,6 @@ public class CommentServiceImpl implements CommentService {
         createdComment.setText(inputComment.getText());
         createdComment.setTask(task);
         createdComment.setAuthor(currentUser);
-        task.getComments().add(createdComment);
 
         return commentRepository.save(createdComment);
     }

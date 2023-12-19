@@ -37,7 +37,7 @@ public class CommentController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserEntity currentUser = (UserEntity) authentication.getPrincipal();
 
-        TaskEntity task = taskService.getWithCommentsById(taskId);
+        TaskEntity task = taskService.getById(taskId);
 
         CommentEntity createdComment = commentService.create(inputComment, task, currentUser);
 
