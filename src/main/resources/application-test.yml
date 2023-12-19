@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: WARN
+        type:
+          descriptor:
+            sql:
+              BasicBinder: WARN
+      springframework:
+        orm:
+          jpa: WARN
+          jpa.JpaTransactionManager: WARN
+        transaction: WARN
+        transaction.interceptor: WARN
+      elgordogato:
+        taskmanagementsystem: DEBUG
+
+
+spring:
+  config:
+    activate:
+      on-profile: ci,test
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  sql:
+    init:
+      mode: always
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:6543/taskdb
+    username: root
+    password: root

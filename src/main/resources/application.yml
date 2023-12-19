@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: WARN
+          jpa.JpaTransactionManager: WARN
+        transaction: WARN
+        transaction.interceptor: WARN
+      elgordogato:
+        taskmanagementsystem: INFO
+
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  sql:
+    init:
+      mode: always
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${POSTGRES_DATASOURCE_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+
+
+
+
+
+security:
+  jwt:
+    secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+    # 8h in millisecond
+    expiration-time: 28800000

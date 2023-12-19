@@ -1,0 +1,26 @@
+version: '3.1'
+services:
+  task-server:
+    build: .
+    image: task-server
+    container_name: task-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - task-db
+    environment:
+      - POSTGRES_DATASOURCE_URL=jdbc:postgresql://task-db:5432/taskdb
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+
+  task-db:
+    image: postgres:14-alpine
+    container_name: task-db
+    ports:
+      - "6543:5432"
+    volumes:
+      - /var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=taskdb
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
